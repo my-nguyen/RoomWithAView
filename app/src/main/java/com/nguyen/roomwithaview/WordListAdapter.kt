@@ -1,12 +1,11 @@
 package com.nguyen.roomwithaview
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.nguyen.roomwithaview.databinding.RecyclerviewItemBinding
 
 class WordListAdapter: ListAdapter<Word, WordListAdapter.ViewHolder>(Comparator()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -18,18 +17,16 @@ class WordListAdapter: ListAdapter<Word, WordListAdapter.ViewHolder>(Comparator(
         holder.bind(item.word)
     }
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val wordItemView = itemView.findViewById<TextView>(R.id.textView)
-
+    class ViewHolder(val binding: RecyclerviewItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(text: String?) {
-            wordItemView.text = text
+            binding.textView.text = text
         }
 
         companion object {
             fun create(parent: ViewGroup): ViewHolder {
                 val inflater = LayoutInflater.from(parent.context)
-                val view = inflater.inflate(R.layout.recyclerview_item, parent, false)
-                return ViewHolder(view)
+                val binding = RecyclerviewItemBinding.inflate(inflater, parent, false)
+                return ViewHolder(binding)
             }
         }
     }
